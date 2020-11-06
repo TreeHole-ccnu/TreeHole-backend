@@ -10,7 +10,7 @@ import (
 
 type jwtClaims struct {
 	jwt.StandardClaims
-	Uid string `json:"uid"`
+	Phone string `json:"phone"`
 }
 
 var (
@@ -46,10 +46,10 @@ func JwtAAuth() gin.HandlerFunc {
 	}
 }
 
-func ProduceToken(uid string) string {
+func ProduceToken(phone string) string {
 	//id, _ := strconv.Atoi(uid)
 	claims := &jwtClaims{
-		Uid: uid,
+		Phone: phone,
 	}
 	claims.IssuedAt = time.Now().Unix()
 	claims.ExpiresAt = time.Now().Add(time.Second * time.Duration(ExpireTime)).Unix()
