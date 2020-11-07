@@ -31,7 +31,6 @@ func (db *Database) DbInit {
 	newDb.LogMode(true)
 
 	Db = &Database{Self: newDb}
-
 }
 
 func (db *Database) DbClose (err error) {

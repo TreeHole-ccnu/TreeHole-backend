@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/TreeHole-ccnu/TreeHole-backend/model"
 	"github.com/TreeHole-ccnu/TreeHole-backend/router"
+	"github.com/TreeHole-ccnu/TreeHole-backend/config"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/pflag"
@@ -11,6 +12,10 @@ import (
 	"net/http"
 	"time"
 	"errors"
+)
+
+var (
+	cfg = pflag.StringP("config", "c", "", "apiserver config file path.")
 )
 
 func main() {
@@ -22,6 +27,9 @@ func main() {
 
 	model.Db.DbInit()
 	defer model.Db.DbClose()
+
+	model.RedisDb.Init()
+	defer model.RedisDb.Close()
 
 	//model.RedisDb.Init()
 	//defer model.RedisDb.Close()

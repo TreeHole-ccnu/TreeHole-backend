@@ -19,3 +19,9 @@ type LoginInfo struct {
 	Phone	string	`gorm:"column:phone", json:"phone"`
 	Passoword	string	`gorm:"colmun:password", json:"passoword"`
 }
+
+type RegisterInfo struct {
+	Phone	string	`gorm:"column:phone", json:"phone"`
+	Vcd		string	`gorm:"column:vcd", json:"vcd"`
+	Password	string `gorm:"column:passwprd", json:"password"`
+}

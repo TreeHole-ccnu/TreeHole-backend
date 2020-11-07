@@ -47,7 +47,6 @@ func JwtAAuth() gin.HandlerFunc {
 }
 
 func ProduceToken(phone string) string {
-	//id, _ := strconv.Atoi(uid)
 	claims := &jwtClaims{
 		Phone: phone,
 	}
