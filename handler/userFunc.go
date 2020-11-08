@@ -70,6 +70,7 @@ func UserRegister (c *gin.Context) {
 
 	if err := model.CreateUserRegisterInfo(data.Phone, data.Password); err != nil {
 		SendServerError(c, errno.InternalServerError, nil, err.Error())
+		return
 	}
 
 	SendResponse(c, errno.OK, nil)

@@ -33,8 +33,8 @@ func (db *Database) DbInit {
 	Db = &Database{Self: newDb}
 }
 
-func (db *Database) DbClose (err error) {
-	if err = Db.Self.Close(); err != nil {
+func (db *Database) DbClose {
+	if err := Db.Self.Close(); err != nil {
 		log.Println(err)
 	}
 	return
