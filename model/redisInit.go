@@ -13,7 +13,7 @@ type Redis struct {
 var RedisDb *Redis
 
 //连接redis
-func (rdb *Redis) Init {
+func (rdb *Redis) Init() {
 	pool := &redis.Pool{
 		// 初始化链接数量
 		MaxIdle:     16,

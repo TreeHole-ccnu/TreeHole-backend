@@ -43,5 +43,6 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		user.POST("/login",handler.UserLogin) 			//用户登录
 		user.POST("/register", handler.UserRegister)		//用户注册
 	}
+	return g
 }
 

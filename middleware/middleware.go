@@ -14,7 +14,7 @@ type jwtClaims struct {
 }
 
 var (
-	key        = "miniProject" //salt
+	key        = "treehole" //salt
 	ExpireTime = 3600          //token expire time
 )
 
