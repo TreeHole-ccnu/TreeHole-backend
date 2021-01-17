@@ -31,9 +31,6 @@ func main() {
 	model.RedisDb.Init()
 	defer model.RedisDb.Close()
 
-	//model.RedisDb.Init()
-	//defer model.RedisDb.Close()
-
 	g := gin.New()
 
 	middlewares := []gin.HandlerFunc{}

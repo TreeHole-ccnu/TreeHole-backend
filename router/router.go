@@ -45,5 +45,6 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		user.POST("/resetting",handler.UserResetting) //用户登陆后修改密码
 		user.POST("/normalinfo",handler.UserNormalInfo)	//修改用户基本信息
 	}
+	return g
 }
 

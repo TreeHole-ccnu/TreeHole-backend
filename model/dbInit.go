@@ -14,11 +14,12 @@ type Database struct {
 
 var Db *Database
 
-func (db *Database) DbInit {
-	dns := fmt.Sprintf("%s:%s@tcp(%s)/treehole",
+func (db *Database) DbInit() {
+	dns := fmt.Sprintf("%s:%s@tcp(%s)/%s",
 		viper.GetString("db.username"),
 		viper.GetString("db.password"),
-		viper.GetString("db.addr"))
+		viper.GetString("db.addr"),
+		viper.GetString("db.name"))
 
 	newDb, err := gorm.Open("mysql",dns)
 	if err != nil {
@@ -33,7 +34,7 @@ func (db *Database) DbInit {
 	Db = &Database{Self: newDb}
 }
 
-func (db *Database) DbClose {
+func (db *Database) DbClose() {
 	if err := Db.Self.Close(); err != nil {
 		log.Println(err)
 	}
