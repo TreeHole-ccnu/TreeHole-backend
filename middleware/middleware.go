@@ -27,7 +27,7 @@ func JwtAAuth() gin.HandlerFunc {
 			//跳转登录界面
 			return
 		}
-		token, err := verifyToken(tokenStr)
+		token, err := VerifyToken(tokenStr)
 		if token == nil || err != nil {
 			c.String(401, "token invalid")
 			c.Abort()
@@ -72,7 +72,7 @@ func genToken(claims jwtClaims) (string, error) {
 	return signedToken, nil
 }
 
-func verifyToken(verifyToken string) (*jwt.Token, error) {
+func VerifyToken(verifyToken string) (*jwt.Token, error) {
 	token, err := jwt.Parse(verifyToken, func(token *jwt.Token) (i interface{}, err error) {
 		return []byte(key), nil
 	})

@@ -35,16 +35,23 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	}
 
 
-	g.Use(middleware.JwtAAuth())
+//	g.Use(middleware.JwtAAuth())
 
 	user := g.Group("/treehole/v1/user")
 	{
 		user.GET("/verification", handler.SendVer) 		//发送手机验证码
+		user.GET("/information", handler.InfoGetting)	//获得用户信息
 		user.POST("/login",handler.UserLogin) 			//用户登录
 		user.POST("/register", handler.UserRegister)	//用户注册
 		user.POST("/resetting",handler.UserResetting) //用户登陆后修改密码
-		user.POST("/normalinfo",handler.UserNormalInfo)	//修改用户基本信息
+		user.POST("/information",handler.InfoResetting)	//修改用户基本信息
+		user.POST("/image",handler.UserImage)
 	}
+
+	// def := g.Group("/treehole/v1/")
+	// {
+	// 	def.GET("/image", handler.SendVer)
+	// }
 	return g
 }
 
