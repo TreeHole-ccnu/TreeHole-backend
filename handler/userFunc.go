@@ -75,3 +75,4 @@ func UserRegister (c *gin.Context) {
 
 	SendResponse(c, errno.OK, nil)
 }
+

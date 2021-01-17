@@ -41,12 +41,12 @@ func CreateUserRegisterInfo (phone string, password string) error{
 	user := &User{
 		Phone:          phone,
 		Passoword:      password,
-		Id:             0,
 		Level:          0,
 		Name:           "",
 		Sex:            "",
 		Birth:          "",
 		Native:         "",
+		Nation:					"",
 		NativePlace:    "",
 		Email:          "",
 		IdentityNumber: "",

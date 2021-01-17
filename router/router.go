@@ -41,7 +41,9 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	{
 		user.GET("/verification", handler.SendVer) 		//发送手机验证码
 		user.POST("/login",handler.UserLogin) 			//用户登录
-		user.POST("/register", handler.UserRegister)		//用户注册
+		user.POST("/register", handler.UserRegister)	//用户注册
+		user.POST("/resetting",handler.UserResetting) //用户登陆后修改密码
+		user.POST("/normalinfo",handler.UserNormalInfo)	//修改用户基本信息
 	}
 }
 

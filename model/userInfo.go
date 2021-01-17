@@ -8,6 +8,7 @@ type User struct {
 	Name	string	`gorm:"column:name", json:"name"`
 	Sex		string	`gorm:"column:sex", json:"sex"`
 	Birth	string	`gorm:"column:birth", json:"birth"`
+	Nation	string	`gorm:"column:nation", json:"nation"`
 	Native	string	`gorm:"column:native", json:"native"`
 	NativePlace	string	`gorm:"column:native_place", json:"native_place"`
 	Email	string	`gorm:"column:email", json:"email"`
@@ -17,11 +18,11 @@ type User struct {
 
 type LoginInfo struct {
 	Phone	string	`gorm:"column:phone", json:"phone"`
-	Passoword	string	`gorm:"colmun:password", json:"passoword"`
+	Passoword	string	`gorm:"colmun:password", json:"password"`
 }
 
 type RegisterInfo struct {
 	Phone	string	`gorm:"column:phone", json:"phone"`
 	Vcd		string	`gorm:"column:vcd", json:"vcd"`
-	Password	string `gorm:"column:passwprd", json:"password"`
+	Password	string	`gorm:"column:password", json:"password"`
 }
