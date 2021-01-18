@@ -1,1 +1,4 @@
 .idea
+dump.rdb
+*.logs
+logs

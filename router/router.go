@@ -34,24 +34,30 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		svcd.GET("/ram", sd.RAMCheck)
 	}
 
+	g.POST("/treehole/v1/user/login", handler.UserLogin)			//用户登录
 
-//	g.Use(middleware.JwtAAuth())
+	g.GET("/treehole/v1/user/verification", handler.SendVer)		//发送用户手机验证码
+
+	g.POST("/treehole/v1/user/register", handler.UserRegister)	//用户注册
+
+	g.POST("/treehole/v1/user/resetting",handler.UserResetting) 	//用户忘记密码，修改密码
+
+	g.Use(middleware.JwtAAuth())	//身份验证
 
 	user := g.Group("/treehole/v1/user")
 	{
-		user.GET("/verification", handler.SendVer) 		//发送手机验证码
+
 		user.GET("/information", handler.InfoGetting)	//获得用户信息
-		user.POST("/login",handler.UserLogin) 			//用户登录
-		user.POST("/register", handler.UserRegister)	//用户注册
-		user.POST("/resetting",handler.UserResetting) //用户登陆后修改密码
 		user.POST("/information",handler.InfoResetting)	//修改用户基本信息
 		user.POST("/image",handler.UserImage)
 	}
 
-	// def := g.Group("/treehole/v1/")
-	// {
-	// 	def.GET("/image", handler.SendVer)
-	// }
+	volunteer := g.Group("/treehole/v1/volunteer")
+	{
+		volunteer.POST("/information", handler.VolunteerInfo)		//志愿者申请信息
+		volunteer.GET("/checking", handler.VolunteerCheck)	//获取志愿者申请进
+	}
+
 	return g
 }
 

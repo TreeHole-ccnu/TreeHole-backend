@@ -11,3 +11,10 @@ db:  # DB 配置 部署时环境变量覆盖
 redis:  # redis 配置
   network: tcp
   addr: 127.0.0.1:6379
+account:  #阿里云账户
+  regionId: cn-hangzhou
+  accessKeyId: *
+  accesKeySecret: *
+req:  #短信验证码模板
+  signName: TreeHole树洞
+  templateCode: SMS_209821417

@@ -1,10 +1,11 @@
 package handler
 
 import (
+	"github.com/TreeHole-ccnu/TreeHole-backend/middleware"
 	"github.com/TreeHole-ccnu/TreeHole-backend/model"
 	"github.com/TreeHole-ccnu/TreeHole-backend/pkg"
-	"github.com/TreeHole-ccnu/TreeHole-backend/middleware"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func SendVer (c *gin.Context){
@@ -35,20 +36,19 @@ func UserLogin (c *gin.Context) {
 	}
 
 	//i = 1时，该用户还未注册、i = 2时，该用户输入密码错误、i = 3时，该用户输入密码正确
-	i, err := model.ConfirmUserPhone(userLoginInfo.Phone, userLoginInfo.Passoword)
+	i, err := model.ConfirmUserPhone(userLoginInfo.Phone, userLoginInfo.Password)
 	if err != nil {
 		SendServerError(c, errno.InternalServerError, nil, err.Error())
 		return
 	}
-
 	if i == 1 {
-		SendUnauthorizedError(c, errno.ErrUserNotFound, nil, err.Error())
+		SendUnauthorizedError(c, errno.ErrUserNotFound, nil, "User didn't exist ！")
 		return
 	} else if i == 2 {
-		SendUnauthorizedError(c, errno.ErrPasswordIncorrect, nil, err.Error())
+		SendUnauthorizedError(c, errno.ErrPasswordIncorrect, nil, "The password is incorrect ！")
 		return
 	} else if i == 3 {
-		c.JSON(200, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"message": "Login successfully.",
 			"token": middleware.ProduceToken(userLoginInfo.Phone),
 		})

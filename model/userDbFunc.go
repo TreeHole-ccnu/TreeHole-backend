@@ -40,13 +40,13 @@ func ConfirmUserVcd(phone string, code string) int {
 func CreateUserRegisterInfo (phone string, password string) error{
 	user := &User{
 		Phone:          phone,
-		Passoword:      password,
+		Password:      	password,
+		Id:             0,
 		Level:          0,
 		Name:           "",
 		Sex:            "",
 		Birth:          "",
-		Native:         "",
-		Nation:					"",
+		Nation:			"",
 		NativePlace:    "",
 		Email:          "",
 		IdentityNumber: "",

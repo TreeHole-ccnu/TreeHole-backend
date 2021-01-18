@@ -41,7 +41,7 @@ func JwtAAuth() gin.HandlerFunc {
 			return
 		}
 		claim := token.Claims
-		c.Set("uid", claim.(jwt.MapClaims)["uid"])
+		c.Set("phone", claim.(jwt.MapClaims)["phone"])
 		c.Next()
 	}
 }

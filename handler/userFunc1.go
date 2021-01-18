@@ -3,6 +3,8 @@ package handler
 import (
 	"github.com/TreeHole-ccnu/TreeHole-backend/model"
 	"github.com/TreeHole-ccnu/TreeHole-backend/pkg"
+	"net/http"
+
 	//"github.com/TreeHole-ccnu/TreeHole-backend/middleware"
 	"github.com/gin-gonic/gin"
 	"strconv"
@@ -12,22 +14,18 @@ import (
 func UserResetting (c *gin.Context) {
 	var data model.RegisterInfo
 
-	// Token := c.Request.Header.Get("Token")
-	// if token ,err := middleware.VerifyToken(Token); err != nil{
-	// 	data.Phone = token.Claims.(jwt.MapClaims)["uid"]
-	// 	SendBadRequest(c, errno.ErrBind, nil, err.Error())
-	// 	return
-	// } 
-	phone,_ := c.Get("uid")
-	data.Phone = phone.(string)
-
 	if err := c.BindJSON(&data); err != nil {
 		SendBadRequest(c, errno.ErrBind, nil, err.Error())
 		return
 	}
 
+	if model.ConfirmUser(data.Phone) == 0 {
+		SendUnauthorizedError(c, errno.ErrUserNotFound, nil, "The user didn't exist ! ")
+		return
+	}
+
 	if model.ConfirmUserVcd(data.Phone, data.Vcd) == 0 {
-		SendUnauthorizedError(c, errno.ErrValidation, nil, "The vaildation code is not correct")
+		SendUnauthorizedError(c, errno.ErrValidation, nil, "The verification code is not correct")
 		return
 	}
 
@@ -43,12 +41,7 @@ func UserResetting (c *gin.Context) {
 func InfoResetting (c *gin.Context) {
 	var data model.User
 
-	// Token := c.Request.Header.Get("Token")
-	// if data.phone,err := middleware.VerifyToken(Token); err != nil{
-	// 	SendBadRequest(c, errno.ErrBind, nil, err.Error())
-	// 	return
-	// } 
-	phone,_ := c.Get("uid")
+	phone,_ := c.Get("phone")
 	data.Phone = phone.(string)
 
 	if err := c.BindJSON(&data); err != nil {
@@ -67,36 +60,37 @@ func InfoResetting (c *gin.Context) {
 func InfoGetting (c *gin.Context) {
 	var data model.User
 	var	err	error
-	// Token := c.Request.Header.Get("Token")
-	// if phone,_ := c.Get("uid"); err != nil{
-	// 	SendBadRequest(c, errno.ErrBind, nil, err.Error())
-	// 	return
-	// } 
-	phone,_ := c.Get("uid")
+
+	phone,_ := c.Get("phone")
 	data.Phone = phone.(string)
 
-	// if err := c.BindJSON(&data); err != nil {
-	// 	SendBadRequest(c, errno.ErrBind, nil, err.Error())
-	// 	return
-	// }
 	
 	if data,err = model.GetInfo(data.Phone); err != nil {
 		SendServerError(c, errno.InternalServerError, nil, err.Error())
 		return
 	}
 
-	SendResponse(c, errno.OK, data)
+	c.JSON(http.StatusOK, gin.H{
+		"message" : "Getting information successfully ! ",
+		"name" : data.Name,
+		"birth" : data.Birth,
+		"sex" : data.Sex,
+		"nation" : data.Nation,
+		"native_place" : data.NativePlace,
+		"identity_number" : data.IdentityNumber,
+		"phone" : data.Phone,
+		"email" : data.Email,
+		"image_url" : data.ImageUrl,
+		"level" : data.Level,
+	})
+	return
 }
 
 func UserImage (c *gin.Context) {
 	var data model.User
 	var	err	error
-	// Token := c.Request.Header.Get("Token")
-	// if phone,_ := c.Get("uid"); err != nil{
-	// 	SendBadRequest(c, errno.ErrBind, nil, err.Error())
-	// 	return
-	// } 
-	phone,_ := c.Get("uid")
+
+	phone,_ := c.Get("phone")
 	data.Phone = phone.(string)
 
 	fileid, _ := strconv.Atoi(c.Param("fileid"))

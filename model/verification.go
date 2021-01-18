@@ -3,6 +3,7 @@ package model
 import (
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/dysmsapi"
 	"github.com/garyburd/redigo/redis"
+	"github.com/spf13/viper"
 	"log"
 
 	"math/rand"
@@ -13,15 +14,15 @@ import (
 
 // 向手机发送验证码
 func SendMsg(tel string, code string) string {
-	client, err := dysmsapi.NewClientWithAccessKey("cn-hangzhou", "<accesskeyId>", "<accessSecret>")
+	client, err := dysmsapi.NewClientWithAccessKey(viper.GetString("account.regionId"), viper.GetString("account.accessKeyId"), viper.GetString("account.accessKeySecret"))
 	request := dysmsapi.CreateSendSmsRequest()
 	request.Scheme = "https"
 	request.PhoneNumbers = tel //手机号变量值
-	request.SignName = "TreeHole树洞" //签名
-	request.TemplateCode = "SMS_19586XXXX" //模板编码
+	request.SignName = viper.GetString("req.signName")//签名
+	request.TemplateCode = viper.GetString("req.templateCode") //模板编码
 	request.TemplateParam = "{\"code\":\"" + code + "\"}"
 	response, err := client.SendSms(request)
-	//fmt.Println(response.Code)
+	fmt.Println(response.Code)
 
 	if response.Code == "isv.BUSINESS_LIMIT_CONTROL" {
 		return "frequency_limit"
@@ -45,12 +46,12 @@ func SetRedis(phone string, code string) bool {
 	newRedis := RedisDb.Self.Get()
 	_, err := newRedis.Do("SET", phone, code)
 	if err != nil {
-		log.Println("redis set error:", err)
+		fmt.Println("redis set error:", err)
 		return false
 	}
 	_, err = newRedis.Do("expire", phone, 300)
 	if err != nil {
-		log.Println("set expire error: ", err)
+		fmt.Println("set expire error: ", err)
 		return false
 	}
 	return true
