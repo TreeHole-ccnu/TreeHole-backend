@@ -10,11 +10,11 @@ import (
 func ConfirmUserPhone(phone string, password string) (int, error) {
 	var realPassword string
 
-	if Db.Self.Model(&User{}).Where(&User{Phone:phone}).RecordNotFound() {
+	if Db.Self.Model(&User{}).Where(&User{Phone: phone}).RecordNotFound() {
 		return 1, nil
 	}
 
-	if err := Db.Self.Model(&User{}).Where(&User{Phone:phone}).Pluck("password", &realPassword).Error; err != nil {
+	if err := Db.Self.Model(&User{}).Where(&User{Phone: phone}).Pluck("password", &realPassword).Error; err != nil {
 		return 0, err
 	}
 	if password != realPassword {
@@ -37,16 +37,16 @@ func ConfirmUserVcd(phone string, code string) int {
 	return flag
 }
 
-func CreateUserRegisterInfo (phone string, password string) error{
+func CreateUserRegisterInfo(phone string, password string) error {
 	user := &User{
 		Phone:          phone,
-		Password:      	password,
+		Password:       password,
 		Id:             0,
 		Level:          0,
 		Name:           "",
 		Sex:            "",
 		Birth:          "",
-		Nation:			"",
+		Nation:         "",
 		NativePlace:    "",
 		Email:          "",
 		IdentityNumber: "",

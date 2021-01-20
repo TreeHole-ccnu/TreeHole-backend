@@ -2,7 +2,7 @@ package model
 
 import (
 	"fmt"
-	_"github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"github.com/spf13/viper"
 	"log"
@@ -21,7 +21,7 @@ func (db *Database) DbInit() {
 		viper.GetString("db.addr"),
 		viper.GetString("db.name"))
 
-	newDb, err := gorm.Open("mysql",dns)
+	newDb, err := gorm.Open("mysql", dns)
 	if err != nil {
 		log.Println(err)
 	}
@@ -40,5 +40,3 @@ func (db *Database) DbClose() {
 	}
 	return
 }
-
-

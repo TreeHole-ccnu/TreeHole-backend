@@ -19,6 +19,7 @@ var (
 	upToken    string
 	typeMap    map[string]bool
 )
+
 //不知道viper.getstring具体实现的原理，为初始化赋值与所需的基础属性
 var initOSS = func() {
 	accessKey = ""
@@ -26,8 +27,9 @@ var initOSS = func() {
 	bucketName = ""
 	domainName = ""
 	//未知，推测是对文件格式的一种支持策略，表示对于这些格式的文件均支持收纳
-	typeMap = map[string]bool{"jpg": true, "png": true, "bmp": true, "jpeg": true, "gif": true, "svg": true, "pdf":true,"ppt":true,"doc":true,"docx":true,"txt":true}
+	typeMap = map[string]bool{"jpg": true, "png": true, "bmp": true, "jpeg": true, "gif": true, "svg": true, "pdf": true, "ppt": true, "doc": true, "docx": true, "txt": true}
 }
+
 //根据传入文件名判断并获取文件格式
 func getType(filename string) (string, error) {
 	//strings.LastIndex作用为获取符号前字符串总数，例如在此处作用为从filename（“例如: xxxx.jpg”）获取“.”前字符串总数(“对应前面的例子为4”)
@@ -54,6 +56,7 @@ func getToken() {
 	mac := qbox.NewMac(accessKey, secretKey)
 	upToken = putPolicy.UploadToken(mac)
 }
+
 //获取上传文件的路径
 func getObjectName(filename string, id uint32) (string, error) {
 	fileType, err := getType(filename)

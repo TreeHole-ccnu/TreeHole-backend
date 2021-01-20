@@ -7,7 +7,7 @@ import (
 )
 
 type Redis struct {
-	Self	*redis.Pool
+	Self *redis.Pool
 }
 
 var RedisDb *Redis

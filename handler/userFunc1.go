@@ -86,7 +86,30 @@ func InfoGetting (c *gin.Context) {
 	return
 }
 
+//传url进数据库
 func UserImage (c *gin.Context) {
+	var data model.User
+
+	phone,_ := c.Get("phone")
+	data.Phone = phone.(string)
+	if err := c.BindJSON(&data); err != nil {
+		SendBadRequest(c, errno.ErrBind, nil, err.Error())
+		return
+	}
+
+	//model.Image_modify(data.User_id, data.Image_url)
+	if err := model.Image_modify(data.Phone, data.ImageUrl); err != nil {
+		log.Println(err)
+		SendServerError(c, errno.InternalServerError, nil, err.Error())
+		return
+	}
+
+	SendResponse(c, errno.OK, nil)
+	return
+}
+
+//通用接口，传图片，返回url
+func Image (c *gin.Context) {
 	var data model.User
 	var	err	error
 
@@ -109,13 +132,6 @@ func UserImage (c *gin.Context) {
 	return
 }
 
-	//model.Image_modify(data.User_id, data.Image_url)
-	if err := model.Image_modify(data.Phone, data.ImageUrl); err != nil {
-		log.Println(err)
-		SendServerError(c, errno.InternalServerError, nil, err.Error())
-		return
-	}
-
-	SendResponse(c, errno.OK, nil)
+	SendResponse(c, errno.OK, data.ImageUrl)
 	return
 }

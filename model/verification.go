@@ -6,10 +6,10 @@ import (
 	"github.com/spf13/viper"
 	"log"
 
+	"fmt"
 	"math/rand"
 	"strconv"
 	"time"
-	"fmt"
 )
 
 // 向手机发送验证码
@@ -17,8 +17,8 @@ func SendMsg(tel string, code string) string {
 	client, err := dysmsapi.NewClientWithAccessKey(viper.GetString("account.regionId"), viper.GetString("account.accessKeyId"), viper.GetString("account.accessKeySecret"))
 	request := dysmsapi.CreateSendSmsRequest()
 	request.Scheme = "https"
-	request.PhoneNumbers = tel //手机号变量值
-	request.SignName = viper.GetString("req.signName")//签名
+	request.PhoneNumbers = tel                                 //手机号变量值
+	request.SignName = viper.GetString("req.signName")         //签名
 	request.TemplateCode = viper.GetString("req.templateCode") //模板编码
 	request.TemplateParam = "{\"code\":\"" + code + "\"}"
 	response, err := client.SendSms(request)
