@@ -11,6 +11,17 @@ func CreateVolunteer(l Volunteer) error {
 	return nil
 }
 
+//创建志愿者申请简历
+func CreateResume(l []Resume) error {
+	for _,i := range l {
+		if err := Db.Self.Model(&Resume{}).Create(&i).Error; err != nil {
+			log.Println(err)
+			return err
+		}
+	}
+	return nil
+}
+
 //获取志愿者表申请进度
 //1--完善个人信息 2--提交申请表 3--审核申报人信息 4--志愿者协会审核 5--审核通过
 func GetCheckId(phone string) (int, error) {

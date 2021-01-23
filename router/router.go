@@ -52,22 +52,22 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		user.POST("/image",handler.UserImage)
 	}
 
-	def := g.Group("/treehole/v1/")
-	{
-		def.GET("/image", handler.Image)
-	}
+
+	g.GET("/treehole/v1/image", handler.Image)	//上传照片
 
 	administrator := g.Group("/treehole/v1/administrator")
 	{
-		administrator.POST("/addition", handler.LevelChanging)	//超级管理员更改志愿者权限为管理员
-		administrator.POST("/verification",handler.StatusChanging)//管理员通过志愿者申请
-		administrator.GET("/verification",handler.Verification)//批量查看志愿者申请
+		administrator.POST("/addition", handler.LevelChanging)	//超级管理员添加管理员
+		administrator.POST("/verification", handler.StatusChanging)	//管理员通过志愿者申请
+		administrator.GET("/verification", handler.Verification)	//批量查看志愿者申请
+		administrator.POST("/information", handler.VolunteerSearch)	//查找志愿者
+		administrator.GET("/information", handler.GetDetailedInfo)	//志愿者信息详情页
 	}
 
 	volunteer := g.Group("/treehole/v1/volunteer")
 	{
 		volunteer.POST("/information", handler.VolunteerInfo)		//志愿者申请信息
-		volunteer.GET("/checking", handler.VolunteerCheck)	//获取志愿者申请进
+		volunteer.GET("/checking", handler.VolunteerCheck)	//获取志愿者申请进度
 	}
 
 	return g

@@ -1,6 +1,12 @@
 package model
 
-import ()
+//返回0，该用户不存在（还未注册）；返回1，该用户存在
+func CheckUser(id int) bool {
+	if Db.Self.Model(&User{}).Where(&User{Id: id}).RecordNotFound() {
+		return false
+	}
+	return true
+}
 
 func ChangeLevel(id int) error {
 	if err := Db.Self.Model(&User{}).Where(&User{Id: id}).Update("level", 1).Error; err != nil {
@@ -11,10 +17,7 @@ func ChangeLevel(id int) error {
 
 func ChangeStatus(id int) error {
 	var ischeck int
-	if err := Db.Self.Model(&User{}).Where("id", id).Pluck("ischeck", &ischeck).Error; err != nil {
-		return err
-	}
-	if err := Db.Self.Model(&User{}).Where(&User{Id: id}).Update("ischeck", ischeck+1).Error; err != nil {
+	if err := Db.Self.Model(&User{}).Where(&User{Id: id}).Pluck("ischeck", &ischeck).Update("ischeck", ischeck+1).Error; err != nil {
 		return err
 	}
 	return nil

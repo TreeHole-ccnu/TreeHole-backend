@@ -23,7 +23,7 @@ type Volunteer struct {
 	IsCheck          int    `gorm:"column:ischeck" ,json:"-"`
 	Reference        string `gorm:"column:reference" ,json:"reference"`
 	Name             string `gorm:"column:name" ,json:"name"`
-	birth            string `gorm:"column:birth" ,json:"birth"`
+	Birth            string `gorm:"column:birth" ,json:"birth"`
 	Political        string `gorm:"column:political" ,json:"political"`
 	Sex              string `gorm:"column:sex" ,json:"sex"`
 	Nation           string `gorm:"column:nation" ,json:"nation"`
@@ -46,9 +46,9 @@ type Volunteer struct {
 }
 
 type ResumeInfo struct {
-	Date      string `gorm:"column:date", json:"date"`
-	WorkPlace string `gorm:"column:work_place", json:"work_place"`
-	Job       string `gorm:"column:job", json:"job"`
+	Date      string `gorm:"column:date" ,json:"date"`
+	WorkPlace string `gorm:"column:work_place" ,json:"work_place"`
+	Job       string `gorm:"column:job" ,json:"job"`
 }
 
 type Resume struct {

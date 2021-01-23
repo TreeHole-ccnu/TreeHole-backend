@@ -7,19 +7,14 @@ db:  # DB 配置 部署时环境变量覆盖
   name: treehole
   addr: 127.0.0.1:3306
   username: root
-  password: 258789hxr
+  password: *
 redis:  # redis 配置
   network: tcp
   addr: 127.0.0.1:6379
 account:  #阿里云账户
   regionId: cn-hangzhou
-<<<<<<< HEAD
-  accessKeyId: 111
-  accesKeySecret: 111
-=======
-  accessKeyId: 1111
-  accesKeySecret: 1111
->>>>>>> 95484a542ef498b8f9d5b110fc02bfb2601d298b
+  accessKeyId: *
+  accesKeySecret: *
 req:  #短信验证码模板
   signName: TreeHole树洞
   templateCode: SMS_209821417

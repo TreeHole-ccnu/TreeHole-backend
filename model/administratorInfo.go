@@ -6,3 +6,7 @@ type CheckingInfo struct {
 	Name    string `gorm:"column:name" ,json:"name"`
 	Phone   string `gorm:"column:phone" ,json:"phone"`
 }
+
+type PhoneInfo struct {
+	Phone	string 	`json:"phone"`
+}
