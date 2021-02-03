@@ -2,12 +2,11 @@ package model
 
 //通过手机号查找志愿者
 func SearchVolunteer(phone string) (string, int, error) {
-	var name string
-	var id int
-	if err := Db.Self.Model(&Volunteer{}).Where(&Volunteer{Phone: phone}).Pluck("name", &name).Pluck("id", &id).Error ; err != nil{
-		return "",0,err
+	var v Volunteer
+	if err := Db.Self.Model(&Volunteer{}).Where(&Volunteer{Phone: phone}).First(&v).Error; err != nil {
+		return "", 0, err
 	}
-	return name, id, nil
+	return v.Name, v.Id, nil
 }
 
 //获取志愿者详细信息
@@ -25,5 +24,5 @@ func GetUserResume(id int) ([]Resume, error) {
 	if err := Db.Self.Model(&Resume{}).Where(&Resume{Id: id}).Find(&r).Error; err != nil {
 		return r, err
 	}
-	return r,nil
+	return r, nil
 }

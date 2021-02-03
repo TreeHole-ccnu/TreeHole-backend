@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func LevelChanging (c *gin.Context) {
+func LevelChanging(c *gin.Context) {
 	idTmp := c.Query("id")
 	id, _ := strconv.Atoi(idTmp)
 	if !model.CheckUser(id) {
@@ -24,7 +24,7 @@ func LevelChanging (c *gin.Context) {
 	SendResponse(c, errno.OK, nil)
 }
 
-func StatusChanging (c *gin.Context) {
+func StatusChanging(c *gin.Context) {
 	var id int
 
 	idTmp := c.Query("id")
@@ -41,27 +41,27 @@ func StatusChanging (c *gin.Context) {
 	SendResponse(c, errno.OK, nil)
 }
 
-func Verification (c *gin.Context) {
+func Verification(c *gin.Context) {
 	var info []model.CheckingInfo
-	page,err := strconv.Atoi(c.Query("page"))
+	page, err := strconv.Atoi(c.Query("page"))
 	if err != nil {
 		SendBadRequest(c, errno.ErrQuery, nil, "The page is wrong.")
 		return
 	}
-  	limit, _  := strconv.Atoi(c.Query("limit"))
+	limit, _ := strconv.Atoi(c.Query("limit"))
 	if err != nil {
 		SendBadRequest(c, errno.ErrQuery, nil, "The limit is wrong.")
 		return
 	}
-		
-	if info,err = model.VerificationInfo(page,limit); err != nil {
+
+	if info, err = model.VerificationInfo(page, limit); err != nil {
 		SendServerError(c, errno.InternalServerError, nil, err.Error())
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message" : "success ! ",
-		"informations" : info,
+		"message":      "success ! ",
+		"informations": info,
 	})
 
 	return

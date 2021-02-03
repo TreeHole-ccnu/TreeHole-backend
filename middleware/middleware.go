@@ -15,7 +15,7 @@ type jwtClaims struct {
 
 var (
 	key        = "treehole" //salt
-	ExpireTime = 3600          //token expire time
+	ExpireTime = 3600       //token expire time
 )
 
 func JwtAAuth() gin.HandlerFunc {

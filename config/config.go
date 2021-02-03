@@ -53,4 +53,3 @@ func (c *Config) watchConfig() {
 		log.Printf("Config file changed: %s", e.Name)
 	})
 }
-

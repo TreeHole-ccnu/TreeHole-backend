@@ -1,17 +1,17 @@
 package main
 
 import (
+	"github.com/TreeHole-ccnu/TreeHole-backend/config"
 	"github.com/TreeHole-ccnu/TreeHole-backend/model"
 	"github.com/TreeHole-ccnu/TreeHole-backend/router"
-	"github.com/TreeHole-ccnu/TreeHole-backend/config"
 
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 	"log"
 	"net/http"
 	"time"
-	"errors"
 )
 
 var (

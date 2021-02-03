@@ -6,21 +6,26 @@ import (
 	"log"
 )
 
-//i = 1时，该用户还未注册、i = 2时，该用户输入密码错误、i = 3时，该用户输入密码正确
-func ConfirmUserPhone(phone string, password string) (int, error) {
-	var realPassword string
-
-	if Db.Self.Model(&User{}).Where(&User{Phone: phone}).RecordNotFound() {
-		return 1, nil
+//返回0，该用户已注册，返回1，该用户未注册
+func ConfirmPhone(phone string) int {
+	var user User
+	if err := Db.Self.Model(&User{}).Where(&User{Phone: phone}).First(&user).Error; err != nil {
+		return 1
 	}
+	return 0
+}
 
-	if err := Db.Self.Model(&User{}).Where(&User{Phone: phone}).Pluck("password", &realPassword).Error; err != nil {
-		return 0, err
+//i = 2时，该用户输入密码错误、i = 3时，该用户输入密码正确
+func ConfirmUserPhone(phone string, password string) (int, error, int) {
+	var u User
+
+	if err := Db.Self.Model(&User{}).Where(&User{Phone: phone}).First(&u).Error; err != nil {
+		return 0, err, -1
 	}
-	if password != realPassword {
-		return 2, nil
+	if password != u.Password {
+		return 2, nil, u.Level
 	} else {
-		return 3, nil
+		return 3, nil, u.Level
 	}
 }
 

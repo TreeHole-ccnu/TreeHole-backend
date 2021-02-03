@@ -5,9 +5,10 @@ import (
 	errno "github.com/TreeHole-ccnu/TreeHole-backend/pkg"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"time"
 )
 
-func VolunteerInfo (c *gin.Context) {
+func VolunteerInfo(c *gin.Context) {
 	phone := c.GetString("phone")
 
 	var volunteerInfo model.VolunteerInfo
@@ -28,7 +29,7 @@ func VolunteerInfo (c *gin.Context) {
 		return
 	}
 
-	for _,i := range resumeInfo {
+	for _, i := range resumeInfo {
 		r.Id = user.Id
 		r.Job = i.Job
 		r.Date = i.Date
@@ -37,6 +38,7 @@ func VolunteerInfo (c *gin.Context) {
 	}
 
 	volunteer := model.Volunteer{
+		Birth:            user.Birth,
 		UserId:           user.Id,
 		IsCheck:          2,
 		Reference:        volunteerInfo.Reference,
@@ -59,6 +61,7 @@ func VolunteerInfo (c *gin.Context) {
 		Reason:           volunteerInfo.Reason,
 		FrontUrl:         volunteerInfo.FrontUrl,
 		ContraryUrl:      volunteerInfo.ContraryUrl,
+		Time:             time.Now().Format("2006-01-02 15:04:05"),
 	}
 
 	if err := model.CreateResume(resume); err != nil {
@@ -82,8 +85,8 @@ func VolunteerCheck(c *gin.Context) {
 
 	if model.ConfirmVolunteer(phone) == 0 {
 		c.JSON(http.StatusOK, gin.H{
-			"check_id" : 1,
-			"message" : "success ! ",
+			"check_id": 1,
+			"message":  "success ! ",
 		})
 	}
 
@@ -94,8 +97,8 @@ func VolunteerCheck(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"check_id" : i,
-		"message" : "success ! ",
+		"check_id": i,
+		"message":  "success ! ",
 	})
 	return
 }
