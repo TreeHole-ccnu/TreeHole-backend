@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"strconv"
+	//"fmt"
 )
 
 func UserResetting(c *gin.Context) {
@@ -24,12 +25,10 @@ func UserResetting(c *gin.Context) {
 		return
 	}
 
-	/*
-		if model.ConfirmUserVcd(data.Phone, data.Vcd) == 0 {
-			SendUnauthorizedError(c, errno.ErrValidation, nil, "The verification code is not correct")
-			return
-		}
-	*/
+	if model.ConfirmUserVcd(data.Phone, data.Vcd) == 0 {
+		SendUnauthorizedError(c, errno.ErrValidation, nil, "The verification code is not correct")
+		return
+	}
 
 	if err := model.ResetPassword(data.Phone, data.Password); err != nil {
 		SendServerError(c, errno.InternalServerError, nil, err.Error())
@@ -42,8 +41,7 @@ func UserResetting(c *gin.Context) {
 func InfoResetting(c *gin.Context) {
 	var data model.User
 
-	phone, _ := c.Get("phone")
-	data.Phone = phone.(string)
+	data.Phone = c.GetString("phone")
 
 	if err := c.BindJSON(&data); err != nil {
 		SendBadRequest(c, errno.ErrBind, nil, err.Error())
@@ -62,8 +60,7 @@ func InfoGetting(c *gin.Context) {
 	var data model.User
 	var err error
 
-	phone, _ := c.Get("phone")
-	data.Phone = phone.(string)
+	data.Phone = c.GetString("phone")
 
 	if data, err = model.GetInfo(data.Phone); err != nil {
 		SendServerError(c, errno.InternalServerError, nil, err.Error())
@@ -90,8 +87,7 @@ func InfoGetting(c *gin.Context) {
 func UserImage(c *gin.Context) {
 	var data model.User
 
-	phone, _ := c.Get("phone")
-	data.Phone = phone.(string)
+	data.Phone = c.GetString("phone")
 	if err := c.BindJSON(&data); err != nil {
 		SendBadRequest(c, errno.ErrBind, nil, err.Error())
 		return
@@ -113,8 +109,7 @@ func Image(c *gin.Context) {
 	var data model.User
 	var err error
 
-	phone, _ := c.Get("phone")
-	data.Phone = phone.(string)
+	data.Phone = c.GetString("phone")
 
 	fileid, _ := strconv.Atoi(c.Param("fileid"))
 	file, header, err := c.Request.FormFile("file")
@@ -125,7 +120,7 @@ func Image(c *gin.Context) {
 	dataLen := header.Size
 
 	data.ImageUrl, err = model.Uploadfile(header.Filename, uint32(fileid), file, dataLen)
-	//log.Print(fileid)
+	log.Print(fileid)
 
 	if err != nil {
 		SendBadRequest(c, errno.ErrAddr, nil, err.Error())

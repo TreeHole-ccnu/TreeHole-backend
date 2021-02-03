@@ -52,7 +52,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		user.POST("/image", handler.UserImage)
 	}
 
-	g.GET("/treehole/v1/image", handler.Image) //上传照片
+	g.POST("/treehole/v1/image", handler.Image) //上传照片 h
 
 	administrator := g.Group("/treehole/v1/administrator")
 	{

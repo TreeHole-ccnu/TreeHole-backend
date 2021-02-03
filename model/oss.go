@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/qiniu/api.v7/v7/auth/qbox"
 	"github.com/qiniu/api.v7/v7/storage"
+	"github.com/spf13/viper"
 	"io"
 	"strconv"
 	"strings"
@@ -22,10 +23,10 @@ var (
 
 //不知道viper.getstring具体实现的原理，为初始化赋值与所需的基础属性
 var initOSS = func() {
-	accessKey = ""
-	secretKey = ""
-	bucketName = ""
-	domainName = ""
+	accessKey = viper.GetString("oss.accessKey")
+	secretKey = viper.GetString("oss.secretKey")
+	bucketName = viper.GetString("oss.bucketName")
+	domainName = viper.GetString("oss.domainName")
 	//未知，推测是对文件格式的一种支持策略，表示对于这些格式的文件均支持收纳
 	typeMap = map[string]bool{"jpg": true, "png": true, "bmp": true, "jpeg": true, "gif": true, "svg": true, "pdf": true, "ppt": true, "doc": true, "docx": true, "txt": true}
 }

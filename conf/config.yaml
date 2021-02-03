@@ -7,7 +7,7 @@ db:  # DB 配置 部署时环境变量覆盖
   name: treehole
   addr: 127.0.0.1:3306
   username: root
-  password: huanglingyun0130
+  password: 11
 redis:  # redis 配置
   network: tcp
   addr: 127.0.0.1:6379
@@ -18,3 +18,8 @@ account:  #阿里云账户
 req:  #短信验证码模板
   signName: TreeHole树洞
   templateCode: SMS_209821417
+oss:  #七牛云
+  accessKey: 111
+  secretKey: 111
+  bucketName: treehole
+  domainName: qnyhvzkvy.hn-bkt.clouddn.com

@@ -25,8 +25,6 @@ func LevelChanging(c *gin.Context) {
 }
 
 func StatusChanging(c *gin.Context) {
-	var id int
-
 	idTmp := c.Query("id")
 	id, err := strconv.Atoi(idTmp)
 	if err != nil {

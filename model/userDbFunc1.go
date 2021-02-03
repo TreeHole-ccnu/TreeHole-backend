@@ -46,7 +46,7 @@ func GetInfo(phone string) (l User, err error) {
 }
 
 func Image_modify(phone string, image_url string) error {
-	if err := Db.Self.Model(&User{}).Where(&User{Phone: phone}).Update("image_url", &image_url).Error; err != nil {
+	if err := Db.Self.Model(&User{}).Where(&User{Phone: phone}).Update("image_url", image_url).Error; err != nil {
 		return err
 	}
 	return nil
